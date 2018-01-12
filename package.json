@@ -1,0 +1,21 @@
+{
+  "name": "composer",
+  "version": "1.0.0",
+  "description": "A simple and declarative Rest javascript client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "rest",
+    "composer",
+    "restify",
+    "javascript",
+    "es2015",
+    "redux",
+    "react-router"
+  ],
+  "author": "Anifowoshe Gbenga David <daveanifowoshe@ymail.com>",
+  "license": "MIT"
+}
