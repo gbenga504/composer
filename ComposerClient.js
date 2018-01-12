@@ -1,4 +1,5 @@
-import { version } from "./version";=
+import { version } from "./version";
+import createComposerThunk from "./middlewares/composerThunk";
 
 export default function ComposerClient({ endpoint } = { endpoint: undefined }) {
   this.version = version;
@@ -9,4 +10,9 @@ ComposerClient.prototype.getVersion = function() {};
 
 ComposerClient.prototype.reducer = function() {};
 
-ComposerClient.prototype.middleware = function() {};
+ComposerClient.prototype.middleware = function({
+  useBeforeRequest,
+  useAfterResponse
+}) {
+  return createComposerThunk({ useBeforeRequest, useAfterResponse });
+};
