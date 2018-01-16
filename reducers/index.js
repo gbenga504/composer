@@ -33,3 +33,16 @@ export const queryDatas = (state = {}, action) => {
       return state;
   }
 };
+
+export const requestHeader = (
+  state = { id: Date.now(), options: {} },
+  action
+) => {
+  switch (action.type) {
+    case types.COMPOSER_SET_REQUEST_HEADER:
+      return { ...state, id: Date.now(), options: action.request.options };
+      break;
+    default:
+      return state;
+  }
+};
