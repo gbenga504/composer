@@ -30,25 +30,11 @@ Subscriber.prototype.makeNetworkRequest = function(
   return _promise;
 };
 
-Subscriber.prototype.getProgressCallback = function(
+Subscriber.prototype.makeAsyncCall = function(
+  method,
   config,
   requestProgressCallback
 ) {
-  let _cb = undefined;
-
-  if (!config.skipProgress && requestProgressCallback) {
-    _cb = requestProgressCallback;
-  } else if (!config.skipProgress && !requestProgressCallback) {
-    invariant(
-      requestProgressCallback,
-      "A progress callback must be implemented if skipProgress of config is false"
-    );
-  }
-
-  return _cb;
-};
-
-Subscriber.prototype.query = function(config, requestProgressCallback) {
   let _promise = new Promise((resolve, reject) => {
     let unsubscribe = this._store.subscribe(() => {
       let { getState } = this._store,
@@ -68,6 +54,36 @@ Subscriber.prototype.query = function(config, requestProgressCallback) {
     this._store.dispatch(actions.sendRequestHeaderCommand());
     return _promise;
   } else return this.makeNetworkRequest("GET", config);
+};
+
+Subscriber.prototype.getProgressCallback = function(
+  config,
+  requestProgressCallback
+) {
+  let _cb = undefined;
+
+  if (!config.skipProgress && requestProgressCallback) {
+    _cb = requestProgressCallback;
+  } else if (!config.skipProgress && !requestProgressCallback) {
+    invariant(
+      requestProgressCallback,
+      "A progress callback must be implemented if skipProgress of config is false"
+    );
+  }
+
+  return _cb;
+};
+
+Subscriber.prototype.query = function(config, requestProgressCallback) {
+  return this.makeAsyncCall("GET", config, requestProgressCallback);
+};
+
+Subscriber.prototype.mutate = function(
+  method,
+  config,
+  requestProgressCallback
+) {
+  return this.makeAsyncCall(method, config, requestProgressCallback);
 };
 
 export default Subscriber;
